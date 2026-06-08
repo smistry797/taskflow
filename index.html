@@ -498,8 +498,13 @@ function renderKanban() {
   var f = filtered();
   var mv = document.getElementById('main-view'); mv.innerHTML = '';
   var board = document.createElement('div'); board.className = 'kanban';
+  var blockedCount = f.filter(function(t){return t.status==='blocked';}).length;
+  var colCount = blockedCount ? 5 : 4;
+  board.style.gridTemplateColumns = 'repeat('+colCount+',1fr)';
   STATUSES.forEach(function(s) {
     var cards = f.filter(function(t){return t.status===s.id;});
+    // Collapse Blocked column when empty
+    if (s.id === 'blocked' && !cards.length) return;
     var arch = s.id==='done' ? tasks.filter(isArchived).length : 0;
     var col = document.createElement('div'); col.className = 'col';
     var hdr = document.createElement('div'); hdr.className = 'col-header'; hdr.style.background = s.hdr;
@@ -550,7 +555,7 @@ function makeCard(t) {
   ft.appendChild(avatarEl);
 
   var nameEl = document.createElement('span');
-  nameEl.style.cssText = 'font-size:13px;color:#334155;font-weight:500;flex:1;min-width:0';
+  nameEl.style.cssText = 'font-size:13px;color:#334155;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:clip;flex:1;min-width:0';
   nameEl.textContent = t.assignee || 'Unassigned';
   ft.appendChild(nameEl);
 
