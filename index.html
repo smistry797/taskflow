@@ -550,14 +550,14 @@ function makeCard(t) {
   ft.appendChild(avatarEl);
 
   var nameEl = document.createElement('span');
-  nameEl.style.cssText = 'font-size:13px;color:#334155;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis';
+  nameEl.style.cssText = 'font-size:13px;color:#334155;font-weight:500;flex:1;min-width:0';
   nameEl.textContent = t.assignee || 'Unassigned';
   ft.appendChild(nameEl);
 
   if (t.due) {
     var dueEl = document.createElement('span');
-    dueEl.style.cssText = 'font-size:12px;font-weight:500;white-space:nowrap;flex-shrink:0;color:'+(overdue?'#dc2626':'#64748B');
-    dueEl.textContent = (overdue ? '! ' : '') + fmtDate(t.due);
+    dueEl.style.cssText = 'font-size:12px;font-weight:500;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:3px;color:'+(overdue?'#dc2626':'#64748B');
+    dueEl.innerHTML = (overdue ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' : '') + fmtDate(t.due);
     ft.appendChild(dueEl);
   }
 
